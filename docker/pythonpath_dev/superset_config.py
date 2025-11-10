@@ -29,6 +29,16 @@ from flask_caching.backends.filesystemcache import FileSystemCache
 
 logger = logging.getLogger()
 
+SUPERSET_SECURITY_VIEW_MENU = True
+# Добавление русского языка в список доступных языков
+LANGUAGES = {
+    "ru": {"flag": "ru", "name": "Русский"},
+    "en": {"flag": "us", "name": "English"}
+}
+
+# Установка русского языка в качестве языка по умолчанию
+BABEL_DEFAULT_LOCALE = "ru"
+
 DATABASE_DIALECT = os.getenv("DATABASE_DIALECT")
 DATABASE_USER = os.getenv("DATABASE_USER")
 DATABASE_PASSWORD = os.getenv("DATABASE_PASSWORD")
@@ -142,3 +152,5 @@ try:
     )
 except ImportError:
     logger.info("Using default Docker config...")
+
+
