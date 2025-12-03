@@ -1004,8 +1004,13 @@ class QueryContextProcessor:
                 )
             elif self._query_context.result_format == ChartDataResultFormat.XLSX:
                 excel.apply_column_types(df, coltypes)
-                result = excel.df_to_excel(df, **current_app.config["EXCEL_EXPORT"])
-            return result or ""
+                # Reset index to start from 1 instead of 0
+                df_export = df.reset_index(drop=True)
+                df_export.index = df_export.index + 1
+                result = excel.df_to_excel(
+                    df_export, index=True, **current_app.config["EXCEL_EXPORT"]
+                )
+                return result or ""
 
         return df.to_dict(orient="records")
 
